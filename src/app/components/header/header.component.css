@@ -1,0 +1,14 @@
+.centered-image {
+    width: auto;
+    height: 20vh; /* 20% of the viewport height */
+    display: block;
+    margin: 0 auto;
+}
+@keyframes shine {
+    0% {
+        background-position: -100%;
+    }
+    100% {
+        background-position: 100%;
+    }
+}
