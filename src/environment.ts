@@ -12,4 +12,5 @@ export const environment = {
     APP_URL: 'http://localhost:4200/',
     TOTOKENNAME:'',
     APP_DESCRIPTION: 'Aoc description',
+    ADMIN_URL:'/api/v1/admin',
   };

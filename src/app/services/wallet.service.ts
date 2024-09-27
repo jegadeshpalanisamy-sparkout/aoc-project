@@ -6,6 +6,7 @@ import { firstValueFrom, interval, Observable, takeUntil } from 'rxjs';
 import { environment } from '../../environment';
 import { AccountService } from './account.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class WalletService {
 
-  constructor(private readonly accountService: AccountService,private readonly router: Router) { }
+  constructor(private readonly accountService: AccountService,private readonly router: Router,private readonly toastrService: ToastrService) { }
   accountAddress = signal<string | null> (null);
   
   wagmiConfig() {
@@ -28,37 +29,46 @@ export class WalletService {
 
     watchAccount(async (account) => {
       console.log('watch account');
-      console.log('account',account);
 
       if(account.address) {
         this.accountAddress.set(account.address);
-        this.accountService.verifyAccountAccess(account.address).subscribe(
-          (res) => {
-            console.log(res);
-          },
-          (err) => {
-            // this.toastr.error(err.error.message);
-            // console.log(err);
-
+        try{
+          this.accountService.verifyAccountAccess(account.address).subscribe({
+            next: (res) => {
+              console.log('res',res);
+                this.toastrService.success('Wallet Succussfully Connected')
+                this.router.navigate(['/admin-dashboard']);
+            },
+            error: (error) => {
+              this.toastrService.error('Please connect your wallet first');
+              console.log('error',error);
+            }
           }
-        )
+            
+          )
+        } catch (error) {
+          this.toastrService.success('Please connect your wallet first');
+          console.log('error',error);
+        }
+        
       } else {
+        this.toastrService.success('Wallet Succussfully Disconnected')
         this.router.navigate(['']); // Navigate to the desired page (empty path)
 
       }
       // Create an observable that emits at a 10ms interval until the wagmi store is updated
-      const wagmiStore$ = interval(10).pipe(
-        takeUntil(
-          new Observable(observer => {
-            // Check if the wagmi store has the user's account address
-            const wagmiStore = JSON.parse(localStorage.getItem('wagmi.store') || '{}');
-            if (wagmiStore.state?.data?.account === account.address) {
-              observer.next();
-              observer.complete();
-            }            
-          })
-        )
-      );
+      // const wagmiStore$ = interval(10).pipe(
+      //   takeUntil(
+      //     new Observable(observer => {
+      //       // Check if the wagmi store has the user's account address
+      //       const wagmiStore = JSON.parse(localStorage.getItem('wagmi.store') || '{}');
+      //       if (wagmiStore.state?.data?.account === account.address) {
+      //         observer.next();
+      //         observer.complete();
+      //       }            
+      //     })
+      //   )
+      // );
        // Wait for the first value from the observable, or null if it completes without emitting
       //  await firstValueFrom(wagmiStore$, { defaultValue: null });
       //  // Get the wagmi store from local storage and parse it as JSON
@@ -88,4 +98,6 @@ export class WalletService {
       return false;
     }
   }
+
+  
 }

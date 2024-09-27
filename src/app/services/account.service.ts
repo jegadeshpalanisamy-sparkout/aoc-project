@@ -10,11 +10,11 @@ import { Router } from '@angular/router';
 export class AccountService {
 
   constructor(private http: HttpClient,private router: Router) { }
+  adminUrl = '/api/v1/admin';
 
   // Method to verify account access by calling the API
-  verifyAccountAccess(address: any): Observable<any> {
-    this.router.navigate(['/admin-dashboard']);
-    return this.http.post(environment.API_BASE_URL + '/login', { address });
+  verifyAccountAccess(wallet_address: any): Observable<any> {
+    return this.http.post(environment.API_BASE_URL+this.adminUrl + '/login', { wallet_address });
   }
 
 }

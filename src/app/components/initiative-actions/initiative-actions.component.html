@@ -1,0 +1,59 @@
+<section class="bg-white dark:bg-gray-900">
+    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16 shadow-lg rounded-lg">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+        {{ isEditMode ? 'Edit Initiative' : 'Add a New Initiative' }}
+      </h2>
+      <form [formGroup]="initiativeForm" (ngSubmit)="onSubmit()">
+        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+          <!-- Initiative Name -->
+          <div class="sm:col-span-2">
+            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NAME OF THE INITIATIVE:</label>
+            <input formControlName="name" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Enter initiative name">
+            <div *ngIf="f['name'].touched && f['name'].invalid" class="text-red-500 text-sm">
+              <div *ngIf="f['name'].errors?.['required']">Name is required.</div>
+              <div *ngIf="f['name'].errors?.['minlength']">Name must be at least 3 characters long.</div>
+            </div>
+          </div>
+  
+          <!-- Start DateTime -->
+          <div class="w-full">
+            <label for="start-datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">START DATE & TIME:</label>
+            <input formControlName="startDatetime" type="datetime-local" id="start-datetime" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+            <div *ngIf="f['startDatetime'].touched && f['startDatetime'].invalid" class="text-red-500 text-sm">
+              <div *ngIf="f['startDatetime'].errors?.['required']">Start date and time is required.</div>
+            </div>
+          </div>
+  
+          <!-- End DateTime -->
+          <div class="w-full">
+            <label for="end-datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">END DATE & TIME:</label>
+            <input formControlName="endDatetime" type="datetime-local" id="end-datetime" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+            <div *ngIf="f['endDatetime'].touched && f['endDatetime'].invalid" class="text-red-500 text-sm">
+              <div *ngIf="f['endDatetime'].errors?.['required']">End date and time is required.</div>
+            </div>
+          </div>
+  
+          <!-- Identifier -->
+          <div class="sm:col-span-2">
+            <label for="identifier" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">IDENTIFIER:</label>
+            <input formControlName="identifier" type="text" id="identifier" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Enter identifier">
+            <div *ngIf="f['identifier'].touched && f['identifier'].invalid" class="text-red-500 text-sm">
+              <div *ngIf="f['identifier'].errors?.['required']">Identifier is required.</div>
+              <div *ngIf="f['identifier'].errors?.['minlength']">Identifier must be at least 5 characters long.</div>
+            </div>
+          </div>
+        </div>
+  
+        <button type="submit" [disabled]="initiativeForm.invalid" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          {{ isEditMode ? 'Update' : 'Add' }} Initiative
+        </button>
+
+        <button type="button" [routerLink]="['/admin-dashboard/initiatives']"  class="mt-4 mx-2 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+          Back
+        </button>
+      </form>
+    </div>
+  </section>
+
+
+  
