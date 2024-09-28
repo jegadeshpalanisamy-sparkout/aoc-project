@@ -7,9 +7,10 @@ export class LocalStorageService {
 
   constructor() { }
 
+ 
   /**
-   * Removes token
-   * @returns
+   * Remove the access token from local storage.
+   *
    */
   removeToken() {
     return localStorage.removeItem('accessToken');

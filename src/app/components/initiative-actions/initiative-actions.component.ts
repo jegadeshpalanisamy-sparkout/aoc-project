@@ -44,6 +44,10 @@ export class InitiativeActionsComponent {
     });
   }
 
+  /**
+   * Load existing initiative data for editing.
+   * @param id The ID of the initiative to load.
+   */
   loadInitiativeData(id: string) {
     this.initiativeService.getInitiativeById(id).subscribe(
       (data) => {
@@ -88,6 +92,10 @@ export class InitiativeActionsComponent {
     }
   }
 
+  /**
+   * Get the initiative form controls
+   * @returns Initiative form controls
+   */
   get f() {
     return this.initiativeForm.controls;
   }

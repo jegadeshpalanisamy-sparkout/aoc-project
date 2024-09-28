@@ -17,7 +17,6 @@ export class AppComponent implements OnInit{
   title = 'aoc-frontend';
   accountAddress: string | null = null;
   constructor(private walletService: WalletService) { }
-  // Method to handle the emitted event
  
   ngOnInit(): void {
     this.accountAddress = this.walletService.accountAddress();

@@ -21,14 +21,15 @@ export class HeaderComponent implements OnInit{
   isLoading = false;
   accountAddress = signal<string | null> (null);
 
-  // Define the @Output EventEmitter
   constructor(private readonly localStorageService: LocalStorageService,private readonly accountService: AccountService,private router: Router,private walletService: WalletService) { }
 
   ngOnInit(): void {
     this.wagmiConfiguration()
   }
 
-
+  /**
+   * Wagmi Configuration
+   */
   public wagmiConfiguration() {
     this.walletService.wagmiConfig();       
   }
