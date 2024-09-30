@@ -6,14 +6,17 @@ import { environment } from '../../environment';
 import { AccountService } from './account.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { LocalStorageService } from './local-storage.service';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class WalletService {
 
-  constructor(private readonly accountService: AccountService,private readonly router: Router,private readonly toastrService: ToastrService) { }
+  constructor(private readonly accountService: AccountService,private readonly router: Router,private readonly toastrService: ToastrService,private localStorageService: LocalStorageService) { }
   accountAddress = signal<string | null> (null);
   ifDisconnect = false;
+  
   
   wagmiConfig() {
     const projectId = environment.WALLET_CONNECT_PROJECT_ID;
@@ -24,52 +27,7 @@ export class WalletService {
       enableAnalytics: wagmiConfig.config.enableAnalytics, 
       themeVariables: wagmiConfig.config.themeVariables
     })
-
-    watchAccount(async (account) => {
-      console.log('watch account');
-
-      if(account.address) {
-        this.accountAddress.set(account.address);
-        try{
-          this.accountService.verifyAccountAccess(account.address).subscribe({
-            next: (res) => {
-              console.log('res',res);
-                this.toastrService.success('Wallet Succussfully Connected')
-                this.router.navigate(['/admin-dashboard']);
-            },
-            error: (error) => {
-              this.toastrService.error('Please connect your wallet first');
-              console.log('error',error);
-            }
-          }
-            
-          )
-        } catch (error) {
-          this.toastrService.success('Please connect your wallet first');
-          console.log('error',error);
-        }
-        
-      } else {
-        if(!this.ifDisconnect) {
-          this.toastrService.success('Wallet Succussfully Disconnected')
-          this.accountService.logout().subscribe(
-            (res) => {
-              console.log('logout response',res);
-            },
-            (error) => {
-              console.log('error',error);
-            }
-          );
-          this.ifDisconnect = true
-        } else {
-          this.ifDisconnect = false
-        }
-       
-        this.router.navigate(['']); // Navigate to the desired page (empty path)
-      }
-     
-      
-     });
+   
 
   }
   /**
@@ -96,5 +54,53 @@ export class WalletService {
     }
   }
 
+  watchingAccount () {  
+    return new Observable(observer => {
+      watchAccount(async (account) => {
+  
+        if(account.address) {
+          this.accountAddress.set(account.address);
+          try{
+            this.accountService.verifyAccountAccess(account.address).subscribe({
+              next: (res) => {
+                  this.localStorageService.setToken(res.data.session.session_token);
+                  // this.router.navigate(['/admin-dashboard']);
+                  this.ifDisconnect = false;
+                  observer.next({success: true})
+              },
+              error: (error) => {
+                this.toastrService.error('Please connect your wallet first');
+                observer.error({success: false})
+              }
+            }
+              
+            )
+          } catch (error) {
+            this.toastrService.success('Please connect your wallet first');
+          }
+          
+        } else {
+          if(!this.ifDisconnect) {
+        
+            this.toastrService.success('Wallet Succussfully Disconnected')
+            this.accountService.logout().subscribe(
+              (res) => {
+                console.log('logout response',res);
+              },
+              (error) => {
+                console.log('error',error);
+              }
+            );
+            this.ifDisconnect = true
+          }          
+          observer.next({success: false})
+        }
+       
+        
+       });
+    })
+   
+
+  }
   
 }

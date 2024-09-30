@@ -10,15 +10,19 @@ import { Router } from '@angular/router';
 export class AccountService {
 
   constructor(private http: HttpClient,private router: Router) { }
-  adminUrl = '/api/v1/admin';
 
   // Method to verify account access by calling the API
   verifyAccountAccess(wallet_address: any): Observable<any> {
-    return this.http.post(environment.API_BASE_URL+this.adminUrl + '/login', { wallet_address });
+    
+    return this.http.post(environment.API_BASE_URL+environment.ADMIN_URL + '/login', { wallet_address });
   }
 
+  /**
+   * Log out of the app by making a DELETE request to the API logout endpoint.
+   * @returns An Observable of the response from the API.
+   */
   logout() {
-    return this.http.delete(environment.API_BASE_URL+this.adminUrl + '/logout');
+    return this.http.delete(environment.API_BASE_URL+environment.ADMIN_URL + '/logout');
   }
 
 }

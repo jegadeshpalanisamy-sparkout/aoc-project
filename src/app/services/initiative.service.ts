@@ -54,7 +54,7 @@ export class InitiativeService {
    * @returns The deleted initiative
    */
   deleteInitiative(id: string | null) {
-    return this.http.delete(`${environment.API_BASE_URL+environment.ADMIN_URL}/initiatives/${id}`);
+    return this.http.delete(`${environment.API_BASE_URL+environment.ADMIN_URL}/delete-initiative/${id}`);
   }
 
 

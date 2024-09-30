@@ -8,28 +8,28 @@
           <!-- Initiative Name -->
           <div class="sm:col-span-2">
             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NAME OF THE INITIATIVE:</label>
-            <input formControlName="name" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Enter initiative name">
-            <div *ngIf="f['name'].touched && f['name'].invalid" class="text-red-500 text-sm">
-              <div *ngIf="f['name'].errors?.['required']">Name is required.</div>
-              <div *ngIf="f['name'].errors?.['minlength']">Name must be at least 3 characters long.</div>
+            <input formControlName="initiative" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Enter initiative name">
+            <div *ngIf="f['initiative'].touched && f['initiative'].invalid" class="text-red-500 text-sm">
+              <div *ngIf="f['initiative'].errors?.['required']">initiative name is required.</div>
+              <div *ngIf="f['initiative'].errors?.['minlength']">initiative name must be at least 3 characters long.</div>
             </div>
           </div>
   
           <!-- Start DateTime -->
           <div class="w-full">
             <label for="start-datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">START DATE & TIME:</label>
-            <input formControlName="startDatetime" type="datetime-local" id="start-datetime" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-            <div *ngIf="f['startDatetime'].touched && f['startDatetime'].invalid" class="text-red-500 text-sm">
-              <div *ngIf="f['startDatetime'].errors?.['required']">Start date and time is required.</div>
+            <input formControlName="start_period" type="datetime-local" id="start-datetime" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+            <div *ngIf="f['start_period'].touched && f['start_period'].invalid" class="text-red-500 text-sm">
+              <div *ngIf="f['start_period'].errors?.['required']">Start date and time is required.</div>
             </div>
           </div>
   
           <!-- End DateTime -->
           <div class="w-full">
             <label for="end-datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">END DATE & TIME:</label>
-            <input formControlName="endDatetime" type="datetime-local" id="end-datetime" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-            <div *ngIf="f['endDatetime'].touched && f['endDatetime'].invalid" class="text-red-500 text-sm">
-              <div *ngIf="f['endDatetime'].errors?.['required']">End date and time is required.</div>
+            <input formControlName="end_period" type="datetime-local" id="end-datetime" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+            <div *ngIf="f['end_period'].touched && f['end_period'].invalid" class="text-red-500 text-sm">
+              <div *ngIf="f['end_period'].errors?.['required']">End date and time is required.</div>
             </div>
           </div>
   
@@ -38,8 +38,8 @@
             <label for="identifier" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">IDENTIFIER:</label>
             <input formControlName="identifier" type="text" id="identifier" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Enter identifier">
             <div *ngIf="f['identifier'].touched && f['identifier'].invalid" class="text-red-500 text-sm">
-              <div *ngIf="f['identifier'].errors?.['required']">Identifier is required.</div>
-              <div *ngIf="f['identifier'].errors?.['minlength']">Identifier must be at least 5 characters long.</div>
+              <div *ngIf="f['identifier'].errors?.['required']">identifier is required.</div>
+              <div *ngIf="f['identifier'].errors?.['minlength']">identifier must be at least 5 characters long.</div>
             </div>
           </div>
         </div>

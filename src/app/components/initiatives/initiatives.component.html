@@ -39,20 +39,19 @@
                     <tbody>
                         <tr class="border-b dark:border-gray-700" *ngFor="let initiatives of initiativesList index as i">
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{i+1}}</th>
-                            <td class="px-4 py-3">{{initiatives.name}}</td>
-                            <td class="px-4 py-3">{{initiatives.startDate}}</td>
-
-                            <td class="px-4 py-3">{{initiatives.endDate}}</td>
+                            <td class="px-4 py-3">{{initiatives.initiative}}</td>
+                            <td class="px-4 py-3">{{initiatives.start_period}}</td>
+                            <td class="px-4 py-3">{{initiatives.end_period}}</td>
                             <td class="px-4 py-3">{{initiatives.identifier}}</td>
                            <td class="px-4 py-3 flex items-center justify-end">
-                                <button type="button" class="flex text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" [routerLink]="['/admin-dashboard/initiative/edit', initiatives.id]">
+                                <button type="button" class="flex text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" [routerLink]="['/admin-dashboard/initiative/edit', initiatives._id]">
                                 <svg class="w-6 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                     <path fill-rule="evenodd" d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z" clip-rule="evenodd"/>
                                     <path fill-rule="evenodd" d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z" clip-rule="evenodd"/>
                                 </svg>
                                     Edit
                                 </button>                              
-                                <button type="button" class="flex text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" (click)="openDeleteModal(initiatives.id,$event)">
+                                <button type="button" class="flex text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" (click)="openDeleteModal(initiatives._id)">
                                     <svg class="w-6 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                         <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
                                     </svg>                                      
@@ -62,45 +61,14 @@
                                
                             </td>
                         </tr>  
-                    </tbody>
-                    <!-- Static data for list for test purpose -->
-                    <tbody>                       
-                        <tr class="border-b dark:border-gray-700">
-                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">001</th>
-                            <td class="px-4 py-3">AOCBEP20 TOKEN FLASH BOOKING BY GRACE
-                                (open to all AOC members who took part in AOC ERC20
-                                V1 over abundance project)</td>
-                            <td class="px-4 py-3">02/07/2022 at
-                                12:00AM
-                                GMT+1 </td>
-
-                            <td class="px-4 py-3">02/13/2022 at
-                                12:00AM
-                                GMT+1</td>
-                            <td class="px-4 py-3">JHWHJCNHSAOC1</td>
-                            <td class="px-4 py-3 flex items-center justify-end">
-                                <button type="button" class="flex text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" [routerLink]="['/admin-dashboard/initiative/edit', '2']">
-                                 <svg class="w-6 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd" d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z" clip-rule="evenodd"/>
-                                    <path fill-rule="evenodd" d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z" clip-rule="evenodd"/>
-                                  </svg>
-                                  Edit</button>
-                                <button type="button" class="flex text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" (click)="openDeleteModal('2',$event)">
-                                    <svg class="w-6 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
-                                    </svg>                                      
-                                    Delete
-                                </button>
-
-                            </td>
-                        </tr>                                              
-
-                    </tbody>
+                    </tbody>                   
                 </table>
             </div>
             <div class="p-3">
-                <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
-            </div>           
+                <!-- <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls> -->
+                <app-pagination #pagination [collectionSize]="tableContent.length" [pageSize]="10" [firstLastButtons]="true" [maxSize]="2">
+                </app-pagination>
+           </div>           
         </div>
     </div>
     </section>

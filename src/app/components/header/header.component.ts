@@ -8,6 +8,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { AccountService } from '../../services/account.service';
 import { Router } from '@angular/router';
 import { WalletService } from '../../services/wallet.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -21,7 +22,7 @@ export class HeaderComponent implements OnInit{
   isLoading = false;
   accountAddress = signal<string | null> (null);
 
-  constructor(private readonly localStorageService: LocalStorageService,private readonly accountService: AccountService,private router: Router,private walletService: WalletService) { }
+  constructor(private readonly localStorageService: LocalStorageService,private readonly accountService: AccountService,private router: Router,private walletService: WalletService,private readonly toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.wagmiConfiguration()
@@ -31,7 +32,20 @@ export class HeaderComponent implements OnInit{
    * Wagmi Configuration
    */
   public wagmiConfiguration() {
-    this.walletService.wagmiConfig();       
+    this.walletService.wagmiConfig(); 
+    this.walletService.watchingAccount().subscribe({
+      next : (res: any) => {
+        if(res.success) {
+          this.toastrService.success('Wallet Succussfully Connected')
+          this.router.navigate(['/admin-dashboard/initiatives']);
+        } else {
+          this.router.navigate(['']);
+        }
+      },
+      error : (error) => {
+        this.toastrService.error('Please connect your wallet first');
+      }
+  });   
   }
 
   

@@ -2,7 +2,7 @@ import { bsc } from "viem/chains";
 
 export const environment = {
     production: false,
-    API_BASE_URL:'https://x633tk8l-3000.inc1.devtunnels.ms',
+    API_BASE_URL:'https://walletscriptbackend.alphaomegacoin.com',
     TITLE:'Aoc-FRONTEND',
     NETWORK:'HOLESKEY Testnet',
     TYPE:'TESTNET',  

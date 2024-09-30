@@ -3,6 +3,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InitiativeService } from '../../services/initiative.service';
+import { WalletService } from '../../services/wallet.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -17,17 +19,19 @@ export class InitiativeActionsComponent {
   initiativeForm: FormGroup;
   isEditMode: boolean = false;
   initiativeId: string | null = null;
-
+  walletAddress: string | null = null;
   constructor(
-    private formBuilder: FormBuilder,
-    private initiativeService: InitiativeService,
-    private router: Router,
-    private route: ActivatedRoute 
+    private readonly formBuilder: FormBuilder,
+    private readonly initiativeService: InitiativeService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute ,
+    private readonly walletService: WalletService,
+    private readonly toastrService: ToastrService
   ) {
     this.initiativeForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      startDatetime: ['', Validators.required],
-      endDatetime: ['', Validators.required],
+      initiative: ['', [Validators.required, Validators.minLength(3)]],
+      start_period: ['', Validators.required],
+      end_period: ['', Validators.required],
       identifier: ['', [Validators.required, Validators.minLength(5)]],
     });
   }
@@ -75,14 +79,21 @@ export class InitiativeActionsComponent {
       } else {
         // Add new initiative
         console.log('initiativeForm',this.initiativeForm.value);
-        this.initiativeService.addInitiative(this.initiativeForm.value).subscribe(
+        this.walletAddress = this.walletService.walletAddress();
+        const data = {
+          ...this.initiativeForm.value,
+          wallet_address: this.walletAddress
+        }                
+        this.initiativeService.addInitiative(data).subscribe(
           (response) => {
             this.router.navigate(['/admin-dashboard/initiatives']);
             console.log('Initiative added successfully', response);
             this.initiativeForm.reset();
+            this.toastrService.success('Initiative added successfully');
           },
           (error) => {
             console.log('Error adding initiative', error);
+            this.toastrService.error('Error adding initiative');
           }
         );
       }

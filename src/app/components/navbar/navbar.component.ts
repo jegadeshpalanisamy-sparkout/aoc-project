@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from "../sidebar/sidebar.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { WalletService } from '../../services/wallet.service';
 import { DashboardComponent } from "../dashboard/dashboard.component";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navbar',
@@ -16,9 +17,28 @@ import { DashboardComponent } from "../dashboard/dashboard.component";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private walletService: WalletService) { }
+  constructor(private walletService: WalletService,private readonly toastrService: ToastrService,private router: Router) { }
 
   ngOnInit(): void {
-    this.walletService.wagmiConfig();
+    this.wagmiConfiguration()
+  }
+
+  /**
+   * Wagmi Configuration
+   */
+  public wagmiConfiguration() {
+    this.walletService.wagmiConfig(); 
+    this.walletService.watchingAccount().subscribe({
+      next : (res: any) => {
+        if(res.success) {
+          this.router.navigate(['/admin-dashboard/initiatives']);
+        } else {
+          this.router.navigate(['/']);
+        }
+      },
+      error : (error) => {
+        this.toastrService.error('Please connect your wallet first');
+      }
+  });   
   }
 }
