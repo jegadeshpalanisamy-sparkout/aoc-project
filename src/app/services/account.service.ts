@@ -17,4 +17,8 @@ export class AccountService {
     return this.http.post(environment.API_BASE_URL+this.adminUrl + '/login', { wallet_address });
   }
 
+  logout() {
+    return this.http.delete(environment.API_BASE_URL+this.adminUrl + '/logout');
+  }
+
 }

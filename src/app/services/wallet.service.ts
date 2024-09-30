@@ -52,11 +52,19 @@ export class WalletService {
       } else {
         if(!this.ifDisconnect) {
           this.toastrService.success('Wallet Succussfully Disconnected')
+          this.accountService.logout().subscribe(
+            (res) => {
+              console.log('logout response',res);
+            },
+            (error) => {
+              console.log('error',error);
+            }
+          );
           this.ifDisconnect = true
         } else {
           this.ifDisconnect = false
         }
-        
+       
         this.router.navigate(['']); // Navigate to the desired page (empty path)
       }
      
