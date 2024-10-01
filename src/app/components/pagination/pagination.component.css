@@ -1,29 +1,16 @@
-.pagination {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    padding: 0;
-  }
-  
-  .pagination li {
-    margin: 0 5px;
-  }
-  
-  .pagination a {
-    text-decoration: none;
-    padding: 8px 12px;
-    border: 1px solid #007bff;
-    color: #007bff;
-    border-radius: 4px;
-  }
-  
-  .pagination .active a {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .pagination .disabled a {
-    color: #ccc;
-    pointer-events: none;
-  }
-  
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+button.bg-blue-500 {
+  background-color: #1d4ed8;
+}
+
+button.text-white {
+  color: white;
+}

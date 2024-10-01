@@ -38,7 +38,7 @@
                     </thead>
                     <tbody>
                         <tr class="border-b dark:border-gray-700" *ngFor="let initiatives of initiativesList index as i">
-                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{i+1}}</th>
+                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{(i+1)}}</th>
                             <td class="px-4 py-3">{{initiatives.initiative}}</td>
                             <td class="px-4 py-3">{{initiatives.start_period}}</td>
                             <td class="px-4 py-3">{{initiatives.end_period}}</td>
@@ -64,11 +64,14 @@
                     </tbody>                   
                 </table>
             </div>
-            <div class="p-3">
-                <!-- <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls> -->
-                <app-pagination #pagination [collectionSize]="tableContent.length" [pageSize]="10" [firstLastButtons]="true" [maxSize]="2">
-                </app-pagination>
-           </div>           
+            <div class="p-3">               
+                    <app-pagination
+                      [totalItems]="totalInitiatives"
+                      [currentPage]="page"
+                      [itemsPerPage]="limit"
+                      (pageChange)="onPageChange($event)">
+                    </app-pagination>
+            </div>           
         </div>
     </div>
     </section>

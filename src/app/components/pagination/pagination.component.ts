@@ -9,62 +9,22 @@ import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/
   styleUrl: './pagination.component.css'
 })
 export class PaginationComponent {
+  @Input() totalItems: number = 0;
+  @Input() currentPage: number = 1;
+  @Input() itemsPerPage: number = 5;
+  @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
-  @Input()
-  collectionSize = 0;
-
-  /** The number of records to display */
-  @Input()
-  pageSize = 5;
-
-  /** Current page */
-  @Input()
-  currentPage = 1;
-
-  /** The number of buttons to show either side of the current page */
-  @Input()
-  maxSize = 2;
-
-  /** Display the First/Last buttons */
-  @Input()
-  firstLastButtons = false;
-
-  /** Display the Next/Previous buttons */
-  @Input()
-  nextPreviousButtons = true;
-
-  /** Display small pagination buttons */
-  @Input()
-  small = false;
-
-  totalPages: any[] = [];
-
-  constructor() {}
-
-  ngOnInit(): void {
-    this.totalPages = new Array(Math.ceil(this.collectionSize / this.pageSize));
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
   }
 
-  /** Update totalPage number if the collectionSize or pageSize values change */
-  ngOnChanges(changes: SimpleChanges) {
-    this.totalPages = new Array(Math.ceil(this.collectionSize / this.pageSize));
-  }
-
-  /** Set page number */
-  selectPageNumber(pageNumber: number) {
-    this.currentPage = pageNumber;
-  }
-
-  /** Set next page number */
-  next() {
-    const nextPage = this.currentPage + 1;
-    nextPage <= this.totalPages.length && this.selectPageNumber(nextPage);
-  }
-
-  /** Set previous page number */
-  previous() {
-    const previousPage = this.currentPage - 1;
-    previousPage >= 1 && this.selectPageNumber(previousPage);
-  }
-
+    /**
+   * Changes the page and emits an event to the parent component.
+   * @param page - The page number to navigate to.
+   */
+    changePage(page: number): void {
+      if (page >= 1 && page <= this.totalPages) {
+        this.pageChange.emit(page);
+      }
+    }
 }

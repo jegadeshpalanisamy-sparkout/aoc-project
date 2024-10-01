@@ -80,8 +80,7 @@ export class WalletService {
           }
           
         } else {
-          if(!this.ifDisconnect) {
-        
+          if(!this.ifDisconnect) {        
             this.toastrService.success('Wallet Succussfully Disconnected')
             this.accountService.logout().subscribe(
               (res) => {

@@ -5,29 +5,23 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from "../dashboard/dashboard.component";
 import { RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import {NgxPaginationModule} from 'ngx-pagination';
 import { PaginationComponent } from "../pagination/pagination.component";
 
 
 @Component({
   selector: 'app-initiatives',
   standalone: true,
-  imports: [CommonModule, DashboardComponent, RouterModule, NgxPaginationModule, PaginationComponent],
+  imports: [CommonModule, DashboardComponent, RouterModule, PaginationComponent],
   templateUrl: './initiatives.component.html',
   styleUrl: './initiatives.component.css'
 })
 export class InitiativesComponent implements OnInit{
   initiativeIdToDelete: string | null = null;
-  constructor(private initiativeService: InitiativeService,private toastrService: ToastrService) { }
+  constructor(private readonly initiativeService: InitiativeService,private readonly toastrService: ToastrService) { }
   initiativesList: initiatives[] = [];
   page: number = 1;
   limit: number = 5; // Number of items per page
-
-  items: any[] = Array.from({ length: 100 }); // Simulating 100 items
-  itemsPerPage: number = 5;
-  currentPage: number = 1;
-
-  tableContent = [];
+  totalInitiatives: number = 0;
 
 
   ngOnInit(): void {
@@ -44,9 +38,9 @@ export class InitiativesComponent implements OnInit{
    */
   getInitatives() {
     this.initiativeService.getInitiative(this.page,this.limit).subscribe((response:any) => {
-      console.log('data',response);
       this.initiativesList = response.data.docs;      
-      console.log('initiativesList',this.initiativesList);
+      this.totalInitiatives = response.data.totalDocs; // Set total number of items  
+    
     });
   }
 
@@ -98,10 +92,15 @@ export class InitiativesComponent implements OnInit{
     );
   }
 
-  onPageChange(page: number): void {
-    // this.page = page;
-    // this.getInitatives();
-    this.currentPage = page;
-  }
+    /**
+   * Handles page change event from the pagination component
+   * @param page - The new page number
+   */
+    onPageChange(page: number) {
+      console.log('page',page);
+      this.page = page;
+      this.getInitatives(); // Fetch data for the new page
+    }
+
 
 }
